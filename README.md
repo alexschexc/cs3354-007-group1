@@ -1,4 +1,1 @@
-# One page Portfolio Website (HTML CSS Project)
-
-YouTube Tutorial Link: https://youtu.be/ZFQkb26UD1Y**
-
+CS 3354-007-Group1 Project
