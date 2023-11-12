@@ -14,4 +14,32 @@
     gap: 9px;
     width:  100%;
     margin-top: 30px;
+    font-size: 48px;
+}
+
+
+.submit{
+    color: #4c00b4;
+    cursor: pointer;
+}
+
+.inputs{
+    margin-top: 55px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.input{
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 480 px;
+    height: 80 px;
+}
+
+.submit-container{
+    display: flex;
+    gap: 30px;
+    margin: 60px auto;
 }
