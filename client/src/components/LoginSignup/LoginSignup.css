@@ -17,29 +17,36 @@
     font-size: 48px;
 }
 
-
-.submit{
-    color: #4c00b4;
+.submit {
+    color: #5e0fcc;
     cursor: pointer;
+}
+
+.submit:hover,
+.submit:active {
+    color: #270b4e;
 }
 
 .inputs{
     margin-top: 55px;
     display: flex;
     flex-direction: column;
-    gap: 50px;
+    gap: 40px;
+    margin-bottom: 0px;
 }
 
 .input{
+    flex-direction: column;
     display: flex;
     align-items: center;
     margin: auto;
-    width: 480 px;
-    height: 80 px;
+    width: 480px;
+    height: 80px;
 }
 
 .submit-container{
     display: flex;
     gap: 30px;
     margin: 60px auto;
+    margin-top: 25px;
 }
