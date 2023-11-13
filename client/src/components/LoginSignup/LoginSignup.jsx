@@ -7,43 +7,46 @@ const LoginSignup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  function handleSignUpClick() {
-    // Validate input fields
+  async function handleSignUpClick() {
     if (!username.trim()) {
         console.log("Username is required");
         return;
-    }
-
-    else if (!email.trim()) {
+    } else if (!email.trim()) {
         console.log("Email is required");
         return;
-    }
-
-    else if (!password.trim()) {
+    } else if (!password.trim()) {
         console.log("Password is required");
         return;
+    } else {
+        const newUser = {
+            username: username,
+            email: email,
+            password: password
+        };
+
+        try {
+            const response = await fetch("http://localhost:5000/record/add", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(newUser),
+            });
+
+            if (response.status === 200) {
+              console.log("Sign Up Successful.")
+            }
+            else if (response.status === 201) {
+              console.log("Email already in use.")
+            }
+        } catch (error) {
+            console.error("Error during fetch:", error);
+            return;
+        }
     }
-    else {
-      const newUser = {
-        username: username,
-        email: email,
-        password: password
-      };
+}
 
-      fetch("http://localhost:5000/record/add", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newUser),
-      })
-
-      console.log("Signing Up...")
-    }
-  }
-
-  function handleLoginClick() {
-    // Validate input fields
+async function handleLoginClick() {
     if (!email.trim()) {
       console.log("Email is required");
       return;
@@ -57,20 +60,33 @@ const LoginSignup = () => {
         username: username,
         email: email,
         password: password
-      };
+      };      
 
-      fetch("http://localhost:5000/record/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(returningUser),
-      })
+      try {
+        const response = await fetch("http://localhost:5000/record/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(returningUser),
+        });
 
-      console.log("Logging In...")
+        if (response.status === 200) {
+          console.log("Sign In Successful.")
+        }
+        else if (response.status === 202) {
+          console.log("Incorrect Password.")
+        }
+        else if (response.status === 201) {
+          console.log("Account with this email does not exist.")
+        }
+        
+    } catch (error) {
+        console.error("Error during fetch:", error);
+        return;
     }
-    
-  };
+  }
+};
 
   return (
     <div className='container'>

@@ -36,53 +36,67 @@ recordRoutes.route("/record/:id").get(function (req, res) {
    });
 });
  
-recordRoutes.route("/record/login").post(async function (req, res) {
-  let db_connect = await dbo.getDb();
-  const returningUser = await db_connect.collection("users").findOne({ email: req.body.email });
-
-  if (!returningUser) {
-    res.status(400).json({ error: "No account with this email exists" });
-  }
-  else if (req.body.password !== returningUser.password) {
-    // Passwords match, authentication successful
-    res.status(401).json({ error: "Incorrect Password" });
-  } 
+recordRoutes.route("/record/login").post(function (req, res) {
+  let db_connect = dbo.getDb();
   
-  return;
+  db_connect.collection("users")
+      .findOne({ email: req.body.email })
+      .then(existingUser => {
+          console.log("Existing User:", existingUser);
+
+          if (!existingUser) {
+            res.status(201).json({ message: 'Account with this email does not exist.' });
+          }
+          else {
+            if (req.body.password !== existingUser.password) {
+              res.status(202).json({ message: "Incorrect Password" });
+            }
+            else {
+              res.status(200).json({ message: 'User signed in successfully' });
+            }
+          }
+      })
+      .catch(error => {
+          console.error("Error finding user:", error);
+          res.status(500).json({ error: 'Internal Server Error' });
+      });
+
  });
-
-// This section will help you create a new record.
-recordRoutes.route("/record/add").post(async function (req, res) {
-  try {
-    let db_connect = await dbo.getDb();
-    const existingUser = await db_connect.collection("users").findOne({ email: req.body.email });
-
-    let myobj = {
+ 
+recordRoutes.route("/record/add").post(function (req, res) {
+  let db_connect = dbo.getDb();
+  let myobj = {
       username: req.body.username,
       email: req.body.email,
       password: req.body.password,
-    };
-    if (existingUser) {
-      // Email already exists, handle accordingly (send a response, throw an error, etc.)
-      res.status(400).json({ error: "Email already exists" });
-      return;
-    }
-    else {
-      db_connect.collection("users").insertOne(myobj, function (err, result) {
-        if (err) {
-          console.error(err);
-          throw err;
-        }
-        res.json(result);
-      });
-    }
-  } catch (error) {
-    console.error("Error:", error.message);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
+  };
 
-  
+  // Assuming db_connect.collection("users") is your collection
+  db_connect.collection("users")
+      .findOne({ email: req.body.email })
+      .then(existingUser => {
+          console.log("Existing User:", existingUser);
+
+          if (existingUser) {
+            res.status(201).json({ message: 'Email already in use.' });
+          }
+          else {
+            db_connect.collection("users").insertOne(myobj, function (err, result) {
+              if (err) {
+                console.error(err);
+                throw err;
+              }
+            });
+
+            res.status(200).json({ message: 'User signed up successfully' });
+          }
+      })
+      .catch(error => {
+          console.error("Error finding user:", error);
+          res.status(500).json({ error: 'Internal Server Error' });
+      });
 });
+
  
 // This section will help you update a record by id.
 recordRoutes.route("/update/:id").post(function (req, response) {
