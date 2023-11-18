@@ -8,9 +8,9 @@
 
 1. Clone the repository
 2. Change to client directory: `cd client`
-3. Install dependencies: `npm install`
+3. Install dependencies for the client: `npm install`
 4. Change to server directory: `cd server`
-5. Install dependencies: `npm install`
+5. Install dependencies for the server: `npm install`
 
 ## Usage
 1. Start the backend server: `node server.js`
