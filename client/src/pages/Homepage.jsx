@@ -4,14 +4,13 @@ import LoginSignup from "../components/LoginSignup/LoginSignup"
 function Homepage (){
     return(
         <div>
-        
-            <div> Homepage </div>
+            <h1> Homepage </h1>
             <a href = "/CurrentChats"> Current Chats</a>
             <br />
             <a href = "/CoursePage"> Courses</a>
             <br />
             <br />
-            <div> Profile: </div>
+            <h2> Profile: </h2>
             <div> Name: XXXX </div>
             <div> Date of Birth: XX/XX/XXXX </div>
             <div> Major: XXXX </div>
