@@ -73,6 +73,7 @@ async function handleLoginClick() {
 
         if (response.status === 200) {
           console.log("Sign In Successful.")
+          window.location.href = '/Homepage';
         }
         else if (response.status === 202) {
           console.log("Incorrect Password.")
@@ -135,6 +136,7 @@ async function handleLoginClick() {
           {action === "Sign Up" ? "Login" : "Sign Up"}
         </div>
       </div>
+      <a href = "/Homepage"> Homepage </a>
     </div>
   );
 };
