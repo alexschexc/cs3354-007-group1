@@ -1,12 +1,10 @@
 import React from "react";
 import { createRoot } from 'react-dom/client';
 import App from "./App";
-import Homepage from "./pages/Homepage";
+import Homepage from "./components/Homepage/Homepage";
 import LoginSignup from "./components/LoginSignup/LoginSignup";
-import Chatroom from "./pages/Chatroom";
-import CurrentChats from "./pages/CurrentChats";
-import CreateChatroom from "./pages/CreateChatroom";
-import CoursePage from "./pages/CoursePage";
+import CurrentChats from "./components/CurrentChats/CurrentChats";
+import CreateChatroom from "./components/CreateChatroom/CreateChatroom";
 import{
   createBrowserRouter,
   RouterProvider,
@@ -17,15 +15,11 @@ import{
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App/>,
+    element: <LoginSignup/>,
   },
  {
     path: "homepage",
     element: <Homepage/>,
-  },
-  {
-    path: "chatroom",
-    element: <Chatroom/>,
   },
   {
     path: "currentchats",
@@ -34,10 +28,6 @@ const router = createBrowserRouter([
   {
     path: "createchatroom",
     element: <CreateChatroom/>,
-  },
-  {
-    path: "courses",
-    element: <CoursePage/>,
   },
 ]);
 

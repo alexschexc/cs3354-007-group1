@@ -1,0 +1,57 @@
+.current-chats-container {
+    display: flex;
+  }
+  
+  .chatroom-list {
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .selected-chatroom {
+    flex: 1;
+  }
+  
+  .chatroom-item {
+    cursor: pointer;
+  }
+  
+  .chat-message {
+    margin-bottom: 10px;
+  }
+  
+  .message-input {
+    position: fixed;
+    bottom: 120px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .message-input input {
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .message-input button {
+    padding: 10px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .message-input button:hover {
+    background-color: #45a049;
+  }
+  
+  a {
+    text-decoration: none;
+    color: #007bff;
+    margin-top: 10px;
+    display: block;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  

@@ -6,16 +6,21 @@ const LoginSignup = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userInfo, setUserInfo] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
 
   async function handleSignUpClick() {
     if (!username.trim()) {
-        console.log("Username is required");
+        alert("Username is required");
         return;
     } else if (!email.trim()) {
-        console.log("Email is required");
+        alert("Email is required");
         return;
     } else if (!password.trim()) {
-        console.log("Password is required");
+        alert("Password is required");
         return;
     } else {
         const newUser = {
@@ -34,10 +39,10 @@ const LoginSignup = () => {
             });
 
             if (response.status === 200) {
-              console.log("Sign Up Successful.")
+              alert("Sign Up Successful. You can log in now.")
             }
             else if (response.status === 201) {
-              console.log("Email already in use.")
+              alert("Email already in use.")
             }
         } catch (error) {
             console.error("Error during fetch:", error);
@@ -48,11 +53,11 @@ const LoginSignup = () => {
 
 async function handleLoginClick() {
     if (!email.trim()) {
-      console.log("Email is required");
+      alert("Email is required");
       return;
     }
     else if (!password.trim()) {
-        console.log("Password is required");
+      alert("Password is required");
       return;
     }
     else {
@@ -72,14 +77,17 @@ async function handleLoginClick() {
         });
 
         if (response.status === 200) {
-          console.log("Sign In Successful.")
+          const responseData = await response.json();
+          returningUser.username = responseData.username;
+          localStorage.setItem('userInfo', JSON.stringify(returningUser));
+
           window.location.href = '/Homepage';
         }
         else if (response.status === 202) {
-          console.log("Incorrect Password.")
+          alert("Incorrect Password.")
         }
         else if (response.status === 201) {
-          console.log("Account with this email does not exist.")
+          alert("Account with this email does not exist.")
         }
         
     } catch (error) {
@@ -136,7 +144,6 @@ async function handleLoginClick() {
           {action === "Sign Up" ? "Login" : "Sign Up"}
         </div>
       </div>
-      <a href = "/Homepage"> Homepage </a>
     </div>
   );
 };
