@@ -6,6 +6,11 @@ const LoginSignup = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userInfo, setUserInfo] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
 
   async function handleSignUpClick() {
     if (!username.trim()) {
@@ -72,6 +77,10 @@ async function handleLoginClick() {
         });
 
         if (response.status === 200) {
+          const responseData = await response.json();
+          returningUser.username = responseData.username;
+          localStorage.setItem('userInfo', JSON.stringify(returningUser));
+
           window.location.href = '/Homepage';
         }
         else if (response.status === 202) {

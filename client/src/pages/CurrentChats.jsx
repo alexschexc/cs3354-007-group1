@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
 
-const ChatMessage = ({ message }) => (
-  <div>
-    <strong>{message.sender}: </strong>
-    {message.text}
-  </div>
-);
-
 function CurrentChats() {
+  const ChatMessage = ({ message }) => (
+    <div>
+      {message.text}
+    </div>
+  );
+
   const [chatrooms, setChatrooms] = useState([]);
   const [selectedChatroom, setSelectedChatroom] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
-
+  const [userInfo, setUserInfo] = useState({
+    username: '',
+    email: '',
+    password: '',
+  });
+  
   const fetchChatrooms = async () => {
     try {
       const response = await fetch('http://localhost:5000/record/get-chatrooms');
@@ -39,17 +43,24 @@ function CurrentChats() {
   };
 
   useEffect(() => {
-    // Fetch chatrooms when the component mounts
+    const storedUserInfo = localStorage.getItem('userInfo');
+
+    if (storedUserInfo) {
+        setUserInfo(JSON.parse(storedUserInfo));
+    }
+  }, []);
+
+  useEffect(() => {
     fetchChatrooms();
   }, []);
 
   useEffect(() => {
-    // Fetch messages whenever selectedChatroom changes
     fetchMessages();
   }, [selectedChatroom]);
 
   const handleChatroomClick = (chatroom) => {
     setSelectedChatroom(chatroom);
+    fetchMessages()
   };
 
   const handleSendMessage = async () => {
@@ -58,7 +69,6 @@ function CurrentChats() {
     }
 
     try {
-      // Replace 'YOUR_API_ENDPOINT' with the actual endpoint for sending messages
       const response = await fetch('http://localhost:5000/record/create-message', {
         method: 'POST',
         headers: {
@@ -66,33 +76,31 @@ function CurrentChats() {
         },
         body: JSON.stringify({
           chatroomId: selectedChatroom._id,
-          text: newMessage,
-          // Add any other necessary data, like the sender's information
+          text:`(${userInfo.username}): ${newMessage}`,
         }),
       });
 
       if (response.status !== 200) {
-        // Handle success, e.g., redirect or show a success message
         console.error('Failed to send message.');
       } 
 
-      // After sending the message, clear the input field
       setNewMessage('');
     } catch (error) {
       console.error('Error sending message:', error);
     }
+
+    fetchMessages()
   };
 
   return (
     <div style={{ display: 'flex' }}>
-      {/* Current Chats Section */}
       <div style={{ flex: 1, marginRight: '20px' }}>
         <h1>Current Chats</h1>
         <a href="/CreateChatroom">Create Chatroom</a>
         <p>Available Chats:</p>
         <ul>
           {chatrooms.map((chatroom) => (
-            <li key={chatroom._id} onClick={() => handleChatroomClick(chatroom)}>
+            <li style={{ cursor: 'pointer' }} key={chatroom._id} onClick={() => handleChatroomClick(chatroom)}>
               {chatroom.title}
             </li>
           ))}
@@ -105,19 +113,16 @@ function CurrentChats() {
         <a href="/">Log Out</a>
       </div>
 
-      {/* Selected Chatroom Section */}
       <div style={{ flex: 1 }}>
         {selectedChatroom && (
           <div>
             <h2>{selectedChatroom.title}</h2>
-            {/* Render chat messages */}
             <div>
               {messages.map((message) => (
                 <ChatMessage key={message._id} message={message} />
               ))}
             </div>
-            {/* Input field for typing messages */}
-            <div>
+            <div style={{ position: 'fixed', bottom: '120px', marginBottom: '20px', textAlign: 'center' }}>
               <input
                 type="text"
                 value={newMessage}

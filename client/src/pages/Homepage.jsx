@@ -1,22 +1,42 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import LoginSignup from "../components/LoginSignup/LoginSignup"
 
 function Homepage (){
+    const [userInfo, setUserInfo] = useState({
+        username: '',
+        email: '',
+        password: '',
+    });
+    
+    useEffect(() => {
+        const storedUserInfo = localStorage.getItem('userInfo');
+
+        if (storedUserInfo) {
+            setUserInfo(JSON.parse(storedUserInfo));
+        }
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem('userInfo');
+        setUserInfo({
+            username: '',
+            email: '',
+            password: '',
+        });
+    };
     return(
         <div>
             <h1> Homepage </h1>
             <a href = "/CurrentChats"> Current Chats</a>
             <br />
-            <a href = "/CoursePage"> Courses</a>
-            <br />
             <br />
             <h2> Profile: </h2>
-            <div> Name: XXXX </div>
-            <div> Date of Birth: XX/XX/XXXX </div>
-            <div> Major: XXXX </div>
-            <div> Click Here to See Full Profile </div> 
+            <div>Name: {userInfo.username}</div>
+            <div>Email: {userInfo.email}</div>
+            <div> Date of Birth: </div>
+            <div> Major: </div>
             <br />
-            <a href = "/"> Log Out </a>
+            <a href = "/" onClick={handleLogout}> Log Out </a>
         </div>
     )
 }

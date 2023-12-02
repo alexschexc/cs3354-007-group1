@@ -1,5 +1,7 @@
 const express = require("express");
- 
+const http = require("http");
+const WebSocket = require("ws");
+
 // recordRoutes is an instance of the express router.
 // We use it to define our routes.
 // The router will be added as a middleware and will take control of requests starting with path /record.
@@ -32,14 +34,18 @@ recordRoutes.route("/record/login").post(function (req, res) {
       .then(existingUser => {
 
           if (!existingUser) {
-            res.status(201).json({ message: 'Account with this email does not exist.' });
+            res.status(201).json({ message: 'Account with this email does not exist.' });;
           }
           else {
             if (req.body.password !== existingUser.password) {
               res.status(202).json({ message: "Incorrect Password" });
             }
             else {
-              res.status(200).json({ message: 'User signed in successfully' });
+              const responseData = {
+                message: 'User signed in successfully',
+                username: existingUser.username
+              };
+              res.status(200).json(responseData);
             }
           }
       })
@@ -62,8 +68,6 @@ recordRoutes.route("/record/login").post(function (req, res) {
 
     // Insert the messageObj into the "messages" collection
     const result = await messagesCollection.insertOne(messageObj);
-
-    console.log(`Inserted message with ID: ${result.insertedId}`);
 
     res.status(200).json({ message: 'Message created successfully' });
   } catch (error) {
