@@ -1,6 +1,4 @@
 const express = require("express");
-const http = require("http");
-const WebSocket = require("ws");
 
 // recordRoutes is an instance of the express router.
 // We use it to define our routes.
