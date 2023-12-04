@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
 import './LoginSignup.css';
+import logo from '../Assets/workflow-high-resolution-logo-black-transparent_10.png'
 
 const LoginSignup = () => {
   const [action, setAction] = useState("Sign Up");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userInfo, setUserInfo] = useState({
-    name: '',
-    email: '',
-    password: '',
-  });
 
   async function handleSignUpClick() {
     if (!username.trim()) {
@@ -98,9 +94,10 @@ async function handleLoginClick() {
 };
 
   return (
-    <div className='container'>
+    <div className="container">
+      <img src={logo} className = "logo" alt = "Logo" />
       <div className="header">
-        <div className="text">{action}</div>
+        <div className="title">{action}</div>
         <div className="underline"></div>
       </div>
       <div className="inputs">
@@ -123,23 +120,14 @@ async function handleLoginClick() {
       </div>
 
       <div className="submit-container">
-        <div
-          className="submit"
-          onClick={() => {
-            if (action === "Login") {
-              handleLoginClick();
-            } else {
-              handleSignUpClick();
-            }
-          }}
-        >
+        <div className="submit" onClick={action === "Login" ? handleLoginClick: handleSignUpClick}>
           Submit
         </div>
         <div
           className={action === "Sign Up" ? "submit gray" : "submit"}
-          onClick={() => {
-            setAction(action === "Login" ? "Sign Up" : "Login");
-          }}
+          onClick={() => 
+            setAction(action === "Login" ? "Sign Up" : "Login")
+          }
         >
           {action === "Sign Up" ? "Login" : "Sign Up"}
         </div>

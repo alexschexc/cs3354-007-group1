@@ -1,21 +1,66 @@
 .homepage-container {
     text-align: center;
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    max-width: 600px;
+    margin: 100px auto;
+    padding: 30px;
+    border: 1px solid #87ceeb;
+    border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
   }
   
-  a {
+  .homepage-link {
     text-decoration: none;
-    color: #007bff;
+    color: #4682b4;
     margin-top: 10px;
     display: block;
   }
   
-  a:hover {
+  .homepage-link:hover {
     text-decoration: underline;
+  }
+
+  .profile-section{
+    margin-top: 20px;
+    border: 1px solid #87ceeb;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .profile-section div{
+    margin-bottom: 10px;
+  }
+
+  .profile-info {
+    text-align: left;
+    width: 100px;
+    margin-left: 210px;
+  }
+
+  .logout-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
+  .chatroom-list p {
+    margin-bottom: 10px;
+  }
+
+  .chatroom-list ul {
+    padding-left: 20px;
+  }
+
+  .chatroom-list li {
+    list-style-type: none;
+    cursor: pointer;
+    background-color: #87ceeb;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 5px;
+  }
+  
+  .chatroom-list li:hover {
+    background-color: #5da4d8;
   }
   

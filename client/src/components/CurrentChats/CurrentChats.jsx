@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './CurrentChats.css';
 
+
 function CurrentChats() {
   const ChatMessage = ({ message }) => <div className="chat-message">{message.text}</div>;
 
@@ -84,9 +85,14 @@ function CurrentChats() {
 
   return (
     <div className="current-chats-container">
+      <div className = "logout-container">
+      <a href="/" className = "logout-button" onClick = {() => localStorage.removeItem('userInfo')}>
+        Log Out
+        </a>
+        </div>
       <div className="chatroom-list">
         <h1>Current Chats</h1>
-        <a href="/CreateChatroom">Create Chatroom</a>
+        <a href="/CreateChatroom" className = "create-chatroom-button">Create Chatroom</a>
         <p>Available Chats:</p>
         <ul>
           {chatrooms.map((chatroom) => (
@@ -98,9 +104,7 @@ function CurrentChats() {
         <br />
         <br />
         <br />
-        <a href="/Homepage">Homepage</a>
-        <br />
-        <a href="/">Log Out</a>
+        <a href="/Homepage" className = "homepage-link">Homepage</a>
       </div>
 
       <div className="selected-chatroom">
@@ -115,7 +119,7 @@ function CurrentChats() {
                 onChange={(e) => setNewMessage(e.target.value)}
                 placeholder="Type your message..."
               />
-              <button onClick={handleSendMessage}>Send</button>
+              <button onClick={handleSendMessage} className = "send-button">Send</button>
             </div>
           </div>
         )}

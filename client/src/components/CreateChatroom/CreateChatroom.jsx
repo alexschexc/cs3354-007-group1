@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './CreateChatroom.css';  // Import the CSS file
+import logo from '../Assets/workflow-high-resolution-logo-black-transparent_10.png'
 
 function CreateChatroom() {
   const [title, setTitle] = useState('');
@@ -32,6 +33,9 @@ function CreateChatroom() {
 
   return (
     <div className="create-chatroom-container">
+      <div className="logout-container">
+        <a href="/" className = "logout-button"> Log Out</a>
+      </div>
       <h1>Create Chatroom</h1>
       <form>
         <label>Chatroom Name:</label>
@@ -59,11 +63,9 @@ function CreateChatroom() {
         />
         <br />
         <br />
-        <button onClick={handleCreateChatroom}>Create Chatroom</button>
+        <button onClick={handleCreateChatroom} className="create-button">Create Chatroom</button>
       </form>
-      <a href="/currentchats">Current Chats</a>
-      <br />
-      <a href="/">Log Out</a>
+      <a href="/currentchats" clasName = 'homepage-link'>Current Chats</a>
     </div>
   );
 }
